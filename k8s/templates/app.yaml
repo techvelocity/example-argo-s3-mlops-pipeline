@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # annotations:
+  #   velocity.tech.v1/id: ml-labeling-app
+  #   velocity.tech.v1/dependsOn: s3-a
+  name: ml-labeling-app
+  labels:
+    app: ml-labeling-app
+spec:
+  selector:
+    matchLabels:
+      api: ml-labeling-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ml-labeling-app
+        api: ml-labeling-app
+    spec:
+      containers:
+        - name: ml-labeling-app
+          image: jdvincent/ml-image-to-tensor-s3-app:latest
+          env:
+            - name: AWS_SECRET_ACCESS_KEY
+              value: 
+            - name: AWS_ACCESS_KEY_ID
+              value: 
+            - name: S3_RAW_IMAGES
+              value: velocity-demo-raw-images
+          ports:
+            - name: ml-labeling-app
+              containerPort: 8000
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ml-labeling-app
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: ml-labeling-app
+  selector:
+    app: ml-labeling-app
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ml-labeling-app
+spec:
+  ingressClassName: kong
+  rules:
+    - host: null
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ml-labeling-app
+                port:
+                  number: 8000

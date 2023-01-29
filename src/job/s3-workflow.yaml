@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: prep-images-
+spec:
+  ttlStrategy:
+    secondsAfterCompletion: 10
+  entrypoint: prep-images
+  templates:
+  - name: prep-images
+    container:
+      image: jdvincent/ml-image-to-tensor-s3-workflow:latest
+      imagePullPolicy: IfNotPresent
+      command: [python]
+      args: ["main.py"]
+      env:
+        - name: S3_RAW_IMAGES
+          value: s3-raw-images
+        - name: S3_PROCESSED_IMAGES
+          value: s3-processed-images
+        - name: AWS_ACCESS_KEY_ID
+          value: aws-access-key-id
+        - name: AWS_SECRET_ACCESS_KEY
+          value: aws-secret-access-key

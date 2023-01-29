@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: argo-ml-pipeline
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: argo-ml-pipeline
+              image: jdvincent/ml-image-to-tensor-s3-job:latest
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: ARGO_SERVER_HOST
+                  value: my-argo-workflows-server.default
+                - name: ARGO_SERVER_PORT
+                  value: "2746"
+                - name: ARGO_TOKEN
+                  value: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6InUzZmJwTFR0NGpZQTItNm9MdlpyTUd0TmVwdHFBdnZPbDZvckdYZ2drb00ifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImFwcC5zZXJ2aWNlLWFjY291bnQtdG9rZW4iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiYXBwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNGIwZjExYTItMzFlYy00N2RjLWJlYjEtOTkzNmJkYmFkNjk0Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6YXBwIn0.i_OnvvLA4f4-RCqPgG6k_8rm0wCB2d7HoA9UAwZ8bfzPhV8YkFg9Vwropg9zQIuHSQNJdnI6o-Ll5LM85Y2-j-OUWfv5xVMI4yE31YtNynv_8wq4Dk9oVcN-P2h7I9K60dmJj9ATVel9Qm0OwlERWganEsx_5a0GbR-k3RskOHObNE0eT1H5yisDoTqiLD6P2EByK9gkpd-_V2B4OlHRz91JjGNQJX5ynp_6kfcgAgQgsstmpADyb_ducS37ClNbnJQxNr2uFKfKsHUjEqqW8-N0vQ86xcpal5tbX-ii4H9v_MUPz2z7LXcpIVqPLMQ522hfSnfsLwdFoT61w8W4cA
+          restartPolicy: OnFailure
