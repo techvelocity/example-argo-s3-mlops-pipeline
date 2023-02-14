@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  # annotations:
-  #   velocity.tech.v1/id: ml-labeling-app
-  #   velocity.tech.v1/dependsOn: s3-a
+  annotations:
+    velocity.tech.v1/id: ml-labeling-app
+    velocity.tech.v1/dependsOn: bucket
   name: ml-labeling-app
   labels:
     app: ml-labeling-app
@@ -22,13 +22,12 @@ spec:
       containers:
         - name: ml-labeling-app
           image: jdvincent/ml-image-to-tensor-s3-app:latest
+          envFrom:
+            - secretRef:
+                name: aws-cred-developer
           env:
-            - name: AWS_SECRET_ACCESS_KEY
-              value: 
-            - name: AWS_ACCESS_KEY_ID
-              value: 
             - name: S3_RAW_IMAGES
-              value: velocity-demo-raw-images
+              value: "{velocity.v1:bucket.exports.path}"
           ports:
             - name: ml-labeling-app
               containerPort: 8000
@@ -52,9 +51,9 @@ kind: Ingress
 metadata:
   name: ml-labeling-app
 spec:
-  ingressClassName: kong
+  ingressClassName: null
   rules:
-    - host: null
+    - host: "api-{velocity.v1.domainSuffix}"
       http:
         paths:
           - path: /

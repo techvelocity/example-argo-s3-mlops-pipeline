@@ -34,17 +34,20 @@ class PrepImages:
             transforms.Normalize(mean=imagenet_mean, std=imagenet_std)]
         )
         for item in self.raw_images:
-            image_name = item['filename'].split('.')[0]
-            file = bytes(item['data']['Body'].read())
-            metadata = item['data']['Metadata']
-            processed_image = {}
-            processed_image['name'] = f"{image_name}.pt"
-            processed_image['metadata'] = metadata
-            img_pil = Image.open(BytesIO(file)).convert('RGB')
-            img_tensor = t(img_pil)
-            img_tensor = torch.unsqueeze(img_tensor, 0)
-            torch.save(img_tensor, processed_image['name'])
-            self.processed_images.append(processed_image)
+            image_name = item['filename'].split('.')
+            image_name = image_name[0]
+            ext = image_name[1]
+            if ext != 'pt':
+                file = bytes(item['data']['Body'].read())
+                metadata = item['data']['Metadata']
+                processed_image = {}
+                processed_image['name'] = f"{image_name}.pt"
+                processed_image['metadata'] = metadata
+                img_pil = Image.open(BytesIO(file)).convert('RGB')
+                img_tensor = t(img_pil)
+                img_tensor = torch.unsqueeze(img_tensor, 0)
+                torch.save(img_tensor, processed_image['name'])
+                self.processed_images.append(processed_image)
 
     def upload_to_s3(self):
         for item in self.processed_images:
