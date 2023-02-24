@@ -4,7 +4,7 @@ kind: Bucket
 metadata:
   annotations:
     velocity.tech.v1/exports-path: path="spec.name"
-    velocity.tech.v1/id: bucket
-  name: "{velocity.v1.generate:cloudResourcePrefix}-my-bucket-var-service-id"
+    velocity.tech.v1/id: {{ .Values.S3.annotations.velocityID }}
+  name: "{velocity.v1.generate:cloudResourcePrefix}-my-bucket"
 spec:
   name: "{velocity.v1.generate:cloudResourcePrefix}-my-bucket"

@@ -3,8 +3,8 @@ kind: CronJob
 metadata:
   name: argo-ml-pipeline
   annotations:
-    velocity.v1.tech/id: argo-ml-pipeline
-    velocity.tech.v1/dependsOn: bucket
+    velocity.v1.tech/id: {{ .Values.cronJob.annotations.velocityID }}
+    velocity.tech.v1/dependsOn: {{ .Values.cronJob.annotations.velocityDependsOn }}
 spec:
   schedule: "* * * * *"
   jobTemplate:
@@ -17,18 +17,18 @@ spec:
         spec:
           containers:
             - name: argo-ml-pipeline
-              image: jdvincent/ml-image-to-tensor-s3-job:latest
+              image: {{ .Values.cronJob.containers.image }}
               imagePullPolicy: IfNotPresent
               envFrom:
                 - secretRef:
                     name: aws-cred-developer
               env:
                 - name: ARGO_SERVER_HOST
-                  value: my-argo-workflows-server.default
+                  value: {{ .Values.cronJob.envVars.ARGO_SERVER_HOST }}
                 - name: ARGO_SERVER_PORT
-                  value: "2746"
+                  value: {{ .Values.cronJob.envVars.ARGO_SERVER_PORT }}
                 - name: ARGO_TOKEN
-                  value: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6InlOWUdxU0N3N29DZEZjSUg5dzdiWXVTMDNpU1pVUDdCUXF3eVBKNU81bXMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImFwcC5zZXJ2aWNlLWFjY291bnQtdG9rZW4iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiYXBwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNjc0NDI1YTUtYjkyMC00YTI3LWE3YTktMzEwZjYxNTgyNmZiIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6YXBwIn0.oMb80DqMGwAjmBcrlhT7vSBLOtEVtXZIgyPldMW7qVmhElpFde3ht4dAfn9eQcaBXx8wFqC_YnG2D4kjSiXyXHTBSmODehYQKaI_1Yhp7cqALwY6CvLe3E0paEtHVRwcgo4yPWzLBjhjgND7umeREVrseTW5uhXM-wvmoJsLa5Evyx8z10JqGoQMTn6858GF4103FVW8mdgJOvC7mrZ_uXyj1s-C62ce50bXqAuSksNlyjtOarzLxjvPNgzS2kWqByPAIrZFr6fEKyLXqjcClQfhaIZuAaQRJHbvmeexZQYYdppAM_Iwa8L_QhswRgaFHplNPFd15bjlL9XLeeLGhA
+                  value: {{ .Values.cronJob.envVars.ARGO_TOKEN }}
                 - name: S3_NAME
                   value: "{velocity.v1:bucket.exports.path}"
           restartPolicy: OnFailure

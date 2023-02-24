@@ -3,31 +3,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    velocity.tech.v1/id: ml-labeling-app
-    velocity.tech.v1/dependsOn: bucket
+    velocity.tech.v1/id: {{ .Values.App.annotations.velocityID }}
+    velocity.tech.v1/dependsOn: {{ .Values.App.annotations.velocityDependsOn }}
   name: ml-labeling-app
   labels:
     app: ml-labeling-app
 spec:
   selector:
     matchLabels:
-      api: ml-labeling-app
+      app: ml-labeling-app
   replicas: 1
   template:
     metadata:
       labels:
         app: ml-labeling-app
-        api: ml-labeling-app
     spec:
       containers:
         - name: ml-labeling-app
-          image: jdvincent/ml-image-to-tensor-s3-app:latest
+          image: {{ .Values.App.containers.image }}
           envFrom:
             - secretRef:
                 name: aws-cred-developer
           env:
             - name: S3_NAME
-              value: "{velocity.v1:bucket.exports.path}"
+              value: {{ .Values.App.envVars.S3_NAME }}
           ports:
             - name: ml-labeling-app
               containerPort: 8000
@@ -53,7 +52,7 @@ metadata:
 spec:
   ingressClassName: null
   rules:
-    - host: "api-{velocity.v1.domainSuffix}"
+    - host: {{ .Values.App.ingress.host }}
       http:
         paths:
           - path: /
