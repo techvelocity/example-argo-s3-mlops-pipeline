@@ -28,9 +28,7 @@ spec:
                 - name: ARGO_SERVER_PORT
                   value: "2746"
                 - name: ARGO_TOKEN
-                  value: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlhicUJLYng2ZllUQVNrVV91anlHaVo0TWZWRHlseFhrOXJBZXlyNEVQTEUifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImFwcC5zZXJ2aWNlLWFjY291bnQtdG9rZW4iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiYXBwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiODMzZWQwZmUtZjM0YS00M2VlLWFlYmEtNzExNTdjYTdiODNkIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6YXBwIn0.KoCUzdYNxXiYF_djJt_BCvyn5mKRwpdmOK6F0NX84vssCIYYZvFaGIi0qnRSKCrj-4j6ccgKtQF8EAvUrhRF5XvqZO2e_n4-JdzLJqAAH-5t9LpjWMSfgJFH15BCEXrty5IyW94g0IBNnhnoF8SkqDICGCVGAWV9eCEoSySkmN1WEAgsGnwAvpU29AsS8h7QNywbxtDJJofLeyMsbmqV7hn5C5-DmS8TJZd1p5Oi7oTAaS4ksl-_voI5ob0GXFQnt3dgIyoAcfWnDQHfKVHzhEFz1jtbqQK1bJUTTCPdO7ZdfykvFqGsf8ZhPjBFTj9i3-b1qwC0cCfS5rvkNnUtaQ
-                - name: S3_RAW_IMAGES
-                  value: "{velocity.v1:bucket.exports.path}"
-                - name: S3_PROCESSED_IMAGES
+                  value: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6InlOWUdxU0N3N29DZEZjSUg5dzdiWXVTMDNpU1pVUDdCUXF3eVBKNU81bXMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImFwcC5zZXJ2aWNlLWFjY291bnQtdG9rZW4iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiYXBwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNjc0NDI1YTUtYjkyMC00YTI3LWE3YTktMzEwZjYxNTgyNmZiIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6YXBwIn0.oMb80DqMGwAjmBcrlhT7vSBLOtEVtXZIgyPldMW7qVmhElpFde3ht4dAfn9eQcaBXx8wFqC_YnG2D4kjSiXyXHTBSmODehYQKaI_1Yhp7cqALwY6CvLe3E0paEtHVRwcgo4yPWzLBjhjgND7umeREVrseTW5uhXM-wvmoJsLa5Evyx8z10JqGoQMTn6858GF4103FVW8mdgJOvC7mrZ_uXyj1s-C62ce50bXqAuSksNlyjtOarzLxjvPNgzS2kWqByPAIrZFr6fEKyLXqjcClQfhaIZuAaQRJHbvmeexZQYYdppAM_Iwa8L_QhswRgaFHplNPFd15bjlL9XLeeLGhA
+                - name: S3_NAME
                   value: "{velocity.v1:bucket.exports.path}"
           restartPolicy: OnFailure

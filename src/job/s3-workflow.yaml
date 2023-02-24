@@ -14,10 +14,8 @@ spec:
       command: [python]
       args: ["main.py"]
       env:
-        - name: S3_RAW_IMAGES
-          value: s3-raw-images
-        - name: S3_PROCESSED_IMAGES
-          value: s3-processed-images
+        - name: S3_NAME
+          value: s3-name
         - name: AWS_ACCESS_KEY_ID
           value: aws-access-key-id
         - name: AWS_SECRET_ACCESS_KEY
