@@ -6,7 +6,7 @@ from fastapi.responses import  HTMLResponse
 
 app = FastAPI()
 
-S3_URI = os.environ.get('S3_RAW_IMAGES')
+S3_NAME = os.environ.get('S3_NAME')
 
 @app.get('/')
 async def index_view():
@@ -26,7 +26,7 @@ async def upload_image(label: str = Form(), file: UploadFile = File(...)):
     s3_client = boto3.client('s3')
     s3_client.put_object(
         Body=file.file, 
-        Bucket='velocity-demo-raw-images', 
+        Bucket=S3_NAME, 
         Key=str(file.filename), 
         Metadata=metadata)
     return HTMLResponse("""
