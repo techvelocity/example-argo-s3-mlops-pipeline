@@ -2,9 +2,10 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: argo-ml-pipeline
+  {{- with .Values.cronJob.annotations }}
   annotations:
-    velocity.v1.tech/id: {{ .Values.cronJob.annotations.velocityID }}
-    velocity.tech.v1/dependsOn: {{ .Values.cronJob.annotations.velocityDependsOn }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   schedule: "* * * * *"
   jobTemplate:
@@ -24,11 +25,11 @@ spec:
                     name: aws-cred-developer
               env:
                 - name: ARGO_SERVER_HOST
-                  value: {{ .Values.cronJob.envVars.ARGO_SERVER_HOST }}
+                  value: {{ .Values.cronJob.envVars.ARGO_SERVER_HOST | quote }}
                 - name: ARGO_SERVER_PORT
-                  value: {{ .Values.cronJob.envVars.ARGO_SERVER_PORT }}
+                  value: {{ .Values.cronJob.envVars.ARGO_SERVER_PORT | quote }}
                 - name: ARGO_TOKEN
-                  value: {{ .Values.cronJob.envVars.ARGO_TOKEN }}
+                  value: {{ .Values.cronJob.envVars.ARGO_TOKEN | quote }}
                 - name: S3_NAME
-                  value: "{velocity.v1:bucket.exports.path}"
+                  value: {{ .Values.cronJob.envVars.S3_NAME | quote }}
           restartPolicy: OnFailure

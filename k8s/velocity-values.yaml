@@ -1,35 +1,34 @@
 App:
   annotations:
-    velocityID: "ml-labeling-app"
-    velocityDependsOn: bucket
+    velocity.tech.v1/id: ml-labeling-app
+    velocity.tech.v1/dependsOn: bucket
 
   containers:
     image: jdvincent/ml-image-to-tensor-s3-app:latest
   
   envVars:
-    S3_NAME: '"{velocity.v1:bucket.exports.path}"'
-
+    S3_NAME: "{velocity.v1:bucket.exports.path}"
 
   ingress:
     ingressClassName: null
     host: "api-{velocity.v1.domainSuffix}"
-  
 
 cronJob:
   annotations:
-    velocityID: "argo-ml-pipeline"
-    velocityDependsOn: bucket
+    velocity.tech.v1/id: argo-ml-pipeline
+    velocity.tech.v1/dependsOn: bucket
 
   containers:
     image: jdvincent/ml-image-to-tensor-s3-job:latest
   
   envVars:
     ARGO_SERVER_HOST: my-argo-workflows-server.default
-    ARGO_SERVER_PORT: '"2746"'
+    ARGO_SERVER_PORT: "2746"
     ARGO_TOKEN: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlF4aS14Vm01Qko3dkswQi1Uc3U4aE16am5XNVNJVWtSZXpWc3I3WTQzazAifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImFwcC5zZXJ2aWNlLWFjY291bnQtdG9rZW4iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiYXBwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiMzM5ODBkM2UtNTYwNS00ZjdkLWI2ZGMtZThiYjE5MDhkMDE1Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6YXBwIn0.2AncK8YvBaEaJf3jeX5PJlOZxiAeR4fsNWldTNe-6gcI-bd8dYelDbGd3KCAS9vxtsxtD8BpMN-eT_qpFSDO87IZZF-MlvEaJB7xLdjP5AX6nkrjW9jJAaG_gDQ0o73JFp4MW1W9Jc_lK4isBrK6Cf1y1apTmIQ_CvQdaDQ1Dh-LKLcgPVZWBwOWCjKwqewiLoAPP4qG4BUVBs0JSFwAk3YVLjK6lt-Bf6-w4Hf4Qhxv-Mx5FN0a7VYTbisbYwan8lLxQVqgLIZFl5m14nV_GYElx0S2kuTX53q5pxA9UK6NWndPSLHFHsC0c9MvFo2ggPIDLFgmFNDu3aSWoYZRWw
     S3_NAME: "{velocity.v1:bucket.exports.path}"
 
 S3:
   annotations:
-    velocityID: bucket
-
+    velocity.tech.v1/exports-path: path="spec.name"
+    velocity.tech.v1/id: bucket
+  name: "{velocity.v1.generate:cloudResourcePrefix}-my-bucket"

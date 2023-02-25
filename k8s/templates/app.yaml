@@ -2,9 +2,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  {{- with .Values.App.annotations }}
   annotations:
-    velocity.tech.v1/id: {{ .Values.App.annotations.velocityID }}
-    velocity.tech.v1/dependsOn: {{ .Values.App.annotations.velocityDependsOn }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   name: ml-labeling-app
   labels:
     app: ml-labeling-app
@@ -26,7 +27,7 @@ spec:
                 name: aws-cred-developer
           env:
             - name: S3_NAME
-              value: {{ .Values.App.envVars.S3_NAME }}
+              value: {{ .Values.App.envVars.S3_NAME | quote }}
           ports:
             - name: ml-labeling-app
               containerPort: 8000

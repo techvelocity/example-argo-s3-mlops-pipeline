@@ -2,9 +2,10 @@
 apiVersion: s3.services.k8s.aws/v1alpha1
 kind: Bucket
 metadata:
+  {{- with .Values.App.annotations }}
   annotations:
-    velocity.tech.v1/exports-path: path="spec.name"
-    velocity.tech.v1/id: {{ .Values.S3.annotations.velocityID }}
-  name: "{velocity.v1.generate:cloudResourcePrefix}-my-bucket"
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  name: {{ .Values.S3.name | quote }}
 spec:
-  name: "{velocity.v1.generate:cloudResourcePrefix}-my-bucket"
+  name: {{ .Values.S3.name | quote }}
