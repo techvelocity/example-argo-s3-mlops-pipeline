@@ -1,6 +1,6 @@
 App:
   annotations:
-    velocity.tech.v1/id: ml-labeling-app
+    velocity.tech.v1/id: "ml-labeling-app"
     velocity.tech.v1/dependsOn: bucket
 
   containers:
@@ -15,16 +15,16 @@ App:
 
 cronJob:
   annotations:
-    velocity.tech.v1/id: argo-ml-pipeline
+    velocity.tech.v1/id: "argo-ml-pipeline"
     velocity.tech.v1/dependsOn: bucket
 
   containers:
     image: jdvincent/ml-image-to-tensor-s3-job:latest
   
   envVars:
-    ARGO_SERVER_HOST: my-argo-workflows-server.default
+    ARGO_SERVER_HOST: my-argo-workflows-server.argo
     ARGO_SERVER_PORT: "2746"
-    ARGO_TOKEN: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlF4aS14Vm01Qko3dkswQi1Uc3U4aE16am5XNVNJVWtSZXpWc3I3WTQzazAifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImFwcC5zZXJ2aWNlLWFjY291bnQtdG9rZW4iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiYXBwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiMzM5ODBkM2UtNTYwNS00ZjdkLWI2ZGMtZThiYjE5MDhkMDE1Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6YXBwIn0.2AncK8YvBaEaJf3jeX5PJlOZxiAeR4fsNWldTNe-6gcI-bd8dYelDbGd3KCAS9vxtsxtD8BpMN-eT_qpFSDO87IZZF-MlvEaJB7xLdjP5AX6nkrjW9jJAaG_gDQ0o73JFp4MW1W9Jc_lK4isBrK6Cf1y1apTmIQ_CvQdaDQ1Dh-LKLcgPVZWBwOWCjKwqewiLoAPP4qG4BUVBs0JSFwAk3YVLjK6lt-Bf6-w4Hf4Qhxv-Mx5FN0a7VYTbisbYwan8lLxQVqgLIZFl5m14nV_GYElx0S2kuTX53q5pxA9UK6NWndPSLHFHsC0c9MvFo2ggPIDLFgmFNDu3aSWoYZRWw
+    ARGO_TOKEN: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkEyY3FxQ19uWmRxNHhtVW5xN1RZSlktdE1MZXROdGlqMmRMQXJLUThRM2cifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJhcmdvIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImFwcC5zZXJ2aWNlLWFjY291bnQtdG9rZW4iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiYXBwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiYjM1NmQxYjEtYmQ1Ni00MzJjLTgxY2EtMDcwZjdmMDI1OGIxIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmFyZ286YXBwIn0.baVIdXzagNvI0yLgpbNPn6Pc0GqjmNIgm0VSM7msE50bFCU9421LTeyf3QxZ8WL6vQPAi0uo6fmzQ03lkI-vz9iV8FZQuA-wEg1SptdizEDQKdvHNd00CWTwKj0IEN51oDVvB5gWuU5-tPHdS28U3rvVmzMNs4Ucf-1_X2w-jRJvRPl_ECLb6PusUsj0p5Jg5Nt_Pyeu19q8bXEZ-2ZOg2KVJiyFnRyKpdzfcb9Ckl3r-1KSjdskqRQgcmKpMrILE5VBSKObLzXbw4ZGS25yQdcKVOa0r36890wVOZK2BhVjPdbnN3-hMcqsRl3_ITHS7EyjsSivS-fy-ndU-RVvUg
     S3_NAME: "{velocity.v1:bucket.exports.path}"
 
 S3:
