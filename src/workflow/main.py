@@ -5,6 +5,7 @@ from torchvision import transforms
 from PIL import Image
 from io import BytesIO
 
+
 class PrepImages:
     def __init__(self):
         self.bucket_name = os.environ.get('S3_NAME')
@@ -68,13 +69,16 @@ class PrepImages:
                     Key=item['filename']
                 )
 
+
 def main():
     prep_images = PrepImages()
+    print(prep_images.s3_client)
     prep_images.download_from_s3()
     if len(prep_images.raw_images) > 0:
         prep_images.process_images()
         prep_images.upload_to_s3()
         prep_images.remove_from_bucket()
+
 
 if __name__ == "__main__":
     main()

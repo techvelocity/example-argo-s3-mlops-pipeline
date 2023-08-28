@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argo-ml
+  labels:
+    app: argo-ml
+spec:
+  selector:
+    matchLabels:
+      app: argo-ml
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: argo-ml
+    spec:
+      containers:
+        - name: argo-ml
+          image: {{ .Values.deployment.containers.image }}
+          env:
+            - name: ARGO_SERVER_HOST
+              value: {{ .Values.deployment.envVars.ARGO_SERVER_HOST | quote }}
+            - name: ARGO_SERVER_PORT
+              value: {{ .Values.deployment.envVars.ARGO_SERVER_PORT | quote }}
+            - name: ARGO_TOKEN
+              value: {{ .Values.deployment.envVars.ARGO_TOKEN | quote }}
+          ports:
+            - name: argo-ml
+              containerPort: 8080
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: argo-ml
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: argo-ml
+  selector:
+    app: argo-ml
+  type: ClusterIP

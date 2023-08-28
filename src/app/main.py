@@ -1,4 +1,6 @@
 import os
+import time
+
 import yaml
 import argo_workflows
 from argo_workflows.api import workflow_service_api
@@ -13,6 +15,7 @@ ARGO_TOKEN = os.environ.get('ARGO_TOKEN')
 ARGO_CONFIG = argo_workflows.Configuration(host=f"http://{ARGO_SERVER_HOST}:{ARGO_SERVER_PORT}")
 ARGO_CONFIG.verify_ssl = False
 
+
 def run_workflow():
     with open('s3-workflow.yaml', 'r') as f:
         manifest = yaml.safe_load(f)
@@ -24,5 +27,12 @@ def run_workflow():
         body=IoArgoprojWorkflowV1alpha1WorkflowCreateRequest(workflow=manifest, _check_type=False),
         _check_return_type=False)
     
+
+def main():
+    while True:
+        run_workflow()
+        time.sleep(60)
+
+
 if __name__ == '__main__':
-    run_workflow()
+    main()
