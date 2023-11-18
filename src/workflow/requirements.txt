@@ -13,4 +13,4 @@ six==1.16.0
 torch==1.13.1
 torchvision==0.14.1
 typing_extensions==4.4.0
-urllib3==1.26.14
+urllib3==1.26.18
